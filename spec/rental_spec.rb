@@ -1,16 +1,11 @@
-require "minitest/autorun"
-require "minitest/reporters"
-require "rental.rb"
-Minitest::Reporters.use!
+RSpec.describe Rental do
+  describe "movie title and rented days" do
+    it "shows corresponding rental movie title and days rented" do
+      movie = build(:movie, title: "Ruby Ruby Ruby", type: Movie::CHILDRENS)
+      rental = Rental.new(movie, 10)
 
-class TestRental < Minitest::Test
-
-  def test_rental
-    movie = Movie.new("Ruby Ruby Ruby", Movie::CHILDRENS)
-    rental = Rental.new(movie, 10)
-    assert_equal(rental.movie.title, "Ruby Ruby Ruby")
-    assert_equal(rental.days_rented, 10)
+      expect(rental.movie.title).to eq "Ruby Ruby Ruby"
+      expect(rental.days_rented).to be 10
+    end
   end
-
 end
-

@@ -1,24 +1,19 @@
-require "minitest/autorun"
-require "minitest/reporters"
-require "customer.rb"
-Minitest::Reporters.use!
+RSpec.describe Customer do
+  describe "calculate and statement" do
+    it "will calculate rental record and compose statement for customer" do
+      eddie = build(:eddie)
 
-class TestCustomer < Minitest::Test
+      spider_man = build(:spider_man)
+      dragon_balls = build(:dragon_balls)
 
-  def test_rent_a_movie
-    movie_spider_man = Movie.new('SpiderMan', Movie::NEW_RELEASE)
-    movie_dragon_balls = Movie.new('Dragon Balls', Movie::CHILDRENS)
+      rental1 = build(:rental, movie: spider_man, days: 7)
+      rental2 = build(:rental, movie: dragon_balls, days: 10)
 
-    eddie = Customer.new 'eddie'
-    rental1 = Rental.new(movie_spider_man, 7)
-    rental2 = Rental.new(movie_dragon_balls, 10)
+      eddie.add_rental(rental1)
+      eddie.add_rental(rental2)
 
-    eddie.add_rental rental1
-    eddie.add_rental rental2
-
-    statement = "Rental Record for eddie\n\tSpiderMan\t21\n\tDragon Balls\t12.0\nAmount owed is 33.0\nYou earned 3 frequent renter points"
-    assert_equal(eddie.statement, statement, "計算結果不符")
+      statement = "Rental Record for Eddie Kao\n\tSpiderMan\t21\n\tDragon Balls\t12.0\nAmount owed is 33.0\nYou earned 3 frequent renter points"
+      expect(eddie.statement).to eq statement
+    end
   end
-
 end
-

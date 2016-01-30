@@ -1,15 +1,10 @@
-require "minitest/autorun"
-require "minitest/reporters"
-require "movie.rb"
-Minitest::Reporters.use!
+RSpec.describe Movie do
+  describe "movie title and price code" do
+    it "shows corresponding title and price code" do
+      movie = Movie.new("SpiderMan", Movie::NEW_RELEASE)
 
-class TestMovie < Minitest::Test
-
-  def test_new_release_movie
-    movie = Movie.new("SpiderMan", Movie::NEW_RELEASE)
-    assert_equal(movie.title, 'SpiderMan')
-    assert_equal(movie.price_code, Movie::NEW_RELEASE)
+      expect(movie.title).to eq "SpiderMan"
+      expect(movie.price_code).to be Movie::NEW_RELEASE
+    end
   end
-
 end
-
